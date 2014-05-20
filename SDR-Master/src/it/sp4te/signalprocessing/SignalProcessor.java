@@ -216,7 +216,7 @@ public class SignalProcessor {
          for (int i = n; i < interpolato.getLength() - n; i++){
                  val[j] = interpolato.values[i];
                  j++;
-         }
+         } 
 
          return new Signal(val);
 
