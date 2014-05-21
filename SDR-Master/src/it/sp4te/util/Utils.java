@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Utils {
@@ -26,23 +24,27 @@ public class Utils {
 	}
 	
 	public static Signal leggiCampioni(String pathIn){
-		List<Complex> list = new ArrayList<>();
+		Complex[] arrayIn = new Complex[15000];
 		BufferedReader in = null;
 		Scanner read;
 		try {
 			in = new BufferedReader(new FileReader(new File(pathIn)));
 			read = new Scanner(in);
-			
-			while(read.hasNext()) {
+			int i = 0;
+			while(read.hasNext() && i<15000) {
 				String s = read.nextLine();
 				String[] tab = s.split("\t");
 				double reale = Double.parseDouble(tab[0]);
 				double immaginario = Double.parseDouble(tab[1]);
-				list.add(new Complex(reale,immaginario));
+				arrayIn[i] = new Complex(reale, immaginario);
+				i++;
+				System.out.println(i);
 			}
+			System.out.println(1);
 			read.close();
+			System.out.println(1);
 		} catch(FileNotFoundException e ) {
-			;
+			e.printStackTrace();
 			
 		} finally {
 			try {
@@ -51,8 +53,9 @@ public class Utils {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}		
-		return new Signal((Complex[]) list.toArray());
+		}	
+		System.out.println(1);
+		return new Signal(arrayIn);
 	}
 	
 	public static void scriviCampioni(String pathIn, double[] in){
