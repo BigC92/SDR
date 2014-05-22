@@ -38,11 +38,8 @@ public class Utils {
 				double immaginario = Double.parseDouble(tab[1]);
 				arrayIn[i] = new Complex(reale, immaginario);
 				i++;
-				System.out.println(i);
 			}
-			System.out.println(1);
 			read.close();
-			System.out.println(1);
 		} catch(FileNotFoundException e ) {
 			e.printStackTrace();
 			
@@ -53,8 +50,7 @@ public class Utils {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	
-		System.out.println(1);
+		}
 		return new Signal(arrayIn);
 	}
 	
@@ -62,9 +58,10 @@ public class Utils {
 		FileWriter out = null;
 		try {
 			out = new FileWriter(new File(pathIn));
-			for(int i = 0; i < in.length; i++)
-				out.write("" + in[i]);
-				
+			for(int i = 0; i < in.length; i++){
+				out.write(in[i] + "\n");
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

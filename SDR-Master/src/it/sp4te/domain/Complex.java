@@ -67,7 +67,7 @@ public class Complex {
 	}
 	
 	public Complex coniugato(){
-		return new Complex(this.reale, - this.immaginaria);
+		return new Complex(this.reale, -this.immaginaria);
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class Complex {
 	
 	public Complex prodotto(Complex b){
 		double reale = this.reale * b.getReale() - this.getImmaginaria() * b.getImmaginaria();
-		double immag = this.reale * b.getImmaginaria() + b.getReale() * this.immaginaria;
+		double immag = this.immaginaria * b.getReale() + this.reale * b.getImmaginaria();
 		return new Complex(reale, immag);
 	}
 	
@@ -173,7 +173,7 @@ public class Complex {
 		Complex a = new Complex(1,2);
 		Complex b = new Complex(1, 1);
 		
-		Complex c = a.somma(b);
+		Complex c = a.prodotto(b.coniugato());
 		
 		System.out.println(c.toString());
 	}

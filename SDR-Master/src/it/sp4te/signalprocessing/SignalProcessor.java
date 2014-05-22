@@ -263,9 +263,8 @@ public class SignalProcessor {
 		return res;
 	}
 	
-	public static Signal selettoreCanale(double deltaF){
+	public static Signal selettoreCanale(double deltaF, Signal signalIn){
 		
-		Signal signalIn = Utils.leggiCampioni("~/Documenti/CBB_FM.txt");
 	    Complex[] valuesIn = signalIn.getValues();
 	    Complex[] valuesOut = new Complex[valuesIn.length];
 	    
@@ -280,30 +279,45 @@ public class SignalProcessor {
 	public static Complex[] shift(Signal signalIn){
 		Complex[] in = signalIn.getValues();
 		Complex ultimo = in[in.length - 1];
+		Complex[] shifted = new Complex[in.length];
+
 		for (int i = in.length -2; i>= 0; i--) {
-			in[i + 1] = in[i];
-		}
+			shifted[i + 1] = in[i];
+		}		
 		
-		in[0] = ultimo;
-		
-		return in;
+		shifted[0] = ultimo;
+
+		return shifted;
 	}
 	
-	public static double[] demodulatore(Signal signalIn){
+	public static Signal rapportoIncrementale(Signal signalIn){
 		Complex[] in = signalIn.getValues();
-		Complex[] shiftedIn = shift(signalIn);
-		double[] out = new double[in.length];
+		Complex[] shifted = shift(signalIn);
+		Complex[] res = new Complex[in.length];
 		
-		for(int i = 0; i < in.length; i++) {
-			Complex temp = in[i].prodotto(shiftedIn[i].coniugato());
-			out[i] = temp.fase();
+		for(int i = 0; i<in.length; i++){
+			res[i] = in[i].prodotto(shifted[i].coniugato());
+		}
+		
+		return new Signal(res);
+	}
+	
+	public static double[] calcoloFrequenze(Signal signalIn){
+		Complex[] in = signalIn.getValues();
+		double[] out = new double[in.length];
+		for(int i = 0; i<in.length; i++){
+			out[i] = Math.atan(in[i].getImmaginaria()/in[i].getReale());
 		}
 		
 		return out;
 	}
 	
-	public static Signal DDC(double band, double deltaF, int T1, int T2){
-		Signal temp = selettoreCanale(deltaF);
+	public static double[] demodulatore(Signal signalIn){
+		return calcoloFrequenze(rapportoIncrementale(signalIn));
+	}
+	
+	public static Signal DDC(Signal signalIn, double band, double deltaF, int T1, int T2){
+		Signal temp = selettoreCanale(deltaF, signalIn);
 		temp = convoluzione(temp, lowPassFilter(band));
 		temp = cambioTassoCampionamento(T1, T2, temp);
 		return temp;
@@ -356,7 +370,9 @@ public class SignalProcessor {
 		System.out.println(s2.toString());
 		*/
 		
-		Utils.scriviCampioni("/home/cristiano/Documenti/Cabibbo_Merda.txt", demodulatore(Utils.leggiCampioni("/home/cristiano/Documenti/CBB_FM.txt")));
+		Utils.scriviCampioni("/home/cristiano/Documenti/demodulatore_out.txt", demodulatore(Utils.leggiCampioni("/home/cristiano/Documenti/CBB_FM.txt")));
+		
+		
 		
 	}
 }
