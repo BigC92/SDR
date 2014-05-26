@@ -24,14 +24,14 @@ public class Utils {
 	}
 	
 	public static Signal leggiCampioni(String pathIn){
-		Complex[] arrayIn = new Complex[15000];
+		Complex[] arrayIn = new Complex[22236433];
 		BufferedReader in = null;
 		Scanner read;
 		try {
 			in = new BufferedReader(new FileReader(new File(pathIn)));
 			read = new Scanner(in);
 			int i = 0;
-			while(read.hasNext() && i<15000) {
+			while(read.hasNext() && i<22236433) {
 				String s = read.nextLine();
 				String[] tab = s.split("\t");
 				double reale = Double.parseDouble(tab[0]);

@@ -326,7 +326,7 @@ public class SignalProcessor {
 	public static void main(String[] args){
 
 		// Esempio convoluzione tra reali
-		/*double[] v1 = {3,2,1};
+		double[] v1 = {3,2,1};
 		double[] v2 = {1,1,2,1};
 
 		double[] v3 = SignalProcessor.convoluzione(v1, v2);
@@ -368,9 +368,9 @@ public class SignalProcessor {
 		Signal s2 = cambioTassoCampionamento(18, 24, s1);
 		System.out.println(s1.toString() + "\n\n");
 		System.out.println(s2.toString());
-		*/
 		
-		Utils.scriviCampioni("/home/cristiano/Documenti/demodulatore_out.txt", demodulatore(Utils.leggiCampioni("/home/cristiano/Documenti/CBB_FM.txt")));
+		//Modificare opportunamente le stringhe a seconda delle directory di lettura e scrittura file
+		Utils.scriviCampioni("/home/demodulatore_out.txt", demodulatore(Utils.leggiCampioni("/home/cristiano/Documenti/CBB_FM.txt")));
 		
 		
 		
